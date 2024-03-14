@@ -1,0 +1,7 @@
+{
+  "name": "Stone Fall",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "custom"
+}
