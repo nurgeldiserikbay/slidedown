@@ -107,16 +107,16 @@ export class GameOpt extends Scene {
   }
 
   preload() {
-    this.load.image('ball', '../img/round-ball.png')
-    this.load.image('background', '../img/bg/bg-4.webp')
+    this.load.image('ball', './img/round-ball.png')
+    this.load.image('background', './img/bg/bg-4.webp')
 
     Object.values(GAME_LEVELS).forEach((level) => {
-      this.load.image(`tiles-${level.ind}`, `../img/tiles/p-${level.ind}.png`)
+      this.load.image(`tiles-${level.ind}`, `./img/tiles/p-${level.ind}.png`)
     })
 
-    this.load.image(`tiles-0`, `../img/tiles/p-0.png`)
+    this.load.image(`tiles-0`, `./img/tiles/p-0.png`)
 
-    this.load.audio('collision', '../sounds/stone.mp3')
+    this.load.audio('collision', './sounds/stone.mp3')
   }
 
   create() {
@@ -143,7 +143,7 @@ export class GameOpt extends Scene {
   }
 
   loadNextTile(nextTile: number) {
-    this.scene.scene.load.image(`tiles-${nextTile}`, `../img/tiles/p-${nextTile}.png`)
+    this.scene.scene.load.image(`tiles-${nextTile}`, `./img/tiles/p-${nextTile}.png`)
     this.scene.scene.load.once(Loader.Events.COMPLETE, () => {
       this.scene.scene.textures.remove(this.wallTile)
       this.wallTile = `tiles-${nextTile}`
@@ -292,7 +292,7 @@ export class GameOpt extends Scene {
     this.configLevel(this.levels[this.level])
     
     Object.values(GAME_LEVELS).forEach((level) => {
-      this.load.image(`tiles-${level.ind}`, `../img/tiles/p-${level.ind}.png`)
+      this.load.image(`tiles-${level.ind}`, `./img/tiles/p-${level.ind}.png`)
     })
 
     this.updateLevel()

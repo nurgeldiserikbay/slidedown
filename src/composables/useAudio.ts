@@ -1,15 +1,15 @@
 import { ref } from 'vue'
 
 export const audioList: { [key: string]: string } = {
-  break: '/sounds/break-stone.mp3',
-  click: '/sounds/click.mp3',
-  falling: '/sounds/falling.mp3',
+  break: './sounds/break-stone.mp3',
+  click: './sounds/click.mp3',
+  falling: './sounds/falling.mp3',
 }
 
 const audioActive = ref(true)
 const musicActive = ref(true)
 
-const music = new Audio('/sounds/music.mp3')
+const music = new Audio('./sounds/music.mp3')
 music.addEventListener('ended', function() {
   this.currentTime = 0
   this.play()
