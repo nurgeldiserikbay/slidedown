@@ -1,4 +1,4 @@
-import { Scene } from 'phaser'
+import { Scene, Loader } from 'phaser'
 
 import { type ControlsType, CONTROLS, MAX_FORCE, VOLUME_SCALE } from '@/utils/conts'
 import { type GameLevelType, BALL_WIDTH, BALL_WIDTH_HALF, DEFAULT_FORCE_SCALE, DEFAULT_GRAVITY_SCALE, GAME_LEVELS, LINE_HEIGHT }  from '@/utils/game_settings'
@@ -80,7 +80,7 @@ export class GameOpt extends Scene {
     this.lineDistance = 200
     this.checkTimer = null
     this.levelTimeout = null
-    this.checkTimerInt = 3000
+    this.checkTimerInt = 5000
     this.background = null
     this.bgScale = 1
     this.wallTile = `tiles-0`
@@ -110,9 +110,11 @@ export class GameOpt extends Scene {
     this.load.image('ball', '../img/round-ball.png')
     this.load.image('background', '../img/bg/bg-4.webp')
 
-    Object.keys(GAME_LEVELS).forEach((key) => {
-      this.load.image( `tiles-${key}`, `../img/tiles/p-${key}.png`)
+    Object.values(GAME_LEVELS).forEach((level) => {
+      this.load.image(`tiles-${level.ind}`, `../img/tiles/p-${level.ind}.png`)
     })
+
+    this.load.image(`tiles-0`, `../img/tiles/p-0.png`)
 
     this.load.audio('collision', '../sounds/stone.mp3')
   }
@@ -140,13 +142,22 @@ export class GameOpt extends Scene {
     this.handleCollision()
   }
 
+  loadNextTile(nextTile: number) {
+    this.scene.scene.load.image(`tiles-${nextTile}`, `../img/tiles/p-${nextTile}.png`)
+    this.scene.scene.load.once(Loader.Events.COMPLETE, () => {
+      this.scene.scene.textures.remove(this.wallTile)
+      this.wallTile = `tiles-${nextTile}`
+    })
+    this.scene.scene.load.start()
+  }
+
   setBg() {
     const image = this.textures.get('background').source[0]
     const width = this.game.config.width as number
     const height = this.game.config.height as number
   
-    this.bgScale = Math.min(width / image.width, height / image.height)
-    
+    this.bgScale = Number((Math.min(width / image.width, height / image.height)).toFixed(2))
+
     this.background = this.add.tileSprite(0, 0, width / this.bgScale, height / this.bgScale, 'background')
     this.background.setPosition(width / 2, height / 2)
 
@@ -173,15 +184,12 @@ export class GameOpt extends Scene {
     this.gravitySensor.addEventListener('reading', () => {
       if (!this.play) return
 
-      const x = Number((this.gravitySensor.x * this.gravityScale).toFixed(2))
-      const y = Number((this.gravitySensor.y * this.gravityScale).toFixed(2))
-
       // @ts-ignore
-      this.matter.world.engine.gravity.x = -1 * x
+      this.matter.world.engine.gravity.x = -1 * Number((this.gravitySensor.x * this.gravityScale).toFixed(2))
       // @ts-ignore
-      this.matter.world.engine.gravity.y = y
-
-      this.ball.setAngularVelocity(-1 * Math.sign(x) * this.forceScale / 2)
+      this.matter.world.engine.gravity.y = Number((this.gravitySensor.y * this.gravityScale).toFixed(2))
+      // @ts-ignore
+      this.ball.setAngularVelocity(Math.sign(this.matter.world.engine.gravity.x) * this.forceScale / 2)
     })
 
     this.gravitySensor.start()
@@ -210,6 +218,7 @@ export class GameOpt extends Scene {
   handleSwipeMove(pointer: any) {
     if (this.play && this.pointerStart) {
       const sign = Math.sign(pointer.position.x - this.pointerStart.x)
+      
       this.matter.applyForceFromAngle(this.ball.body, sign, this.forceScale)
       this.ball.setAngularVelocity(sign * this.forceScale / 2)
     }
@@ -226,9 +235,7 @@ export class GameOpt extends Scene {
   }
 
   handleCollision() {
-    if (this.ball.body.position.y <= this.topLimit) {
-      this.gameStop()
-    }
+    if (this.ball.body.position.y <= this.topLimit) this.gameStop()
   }
 
   moveLines() {
@@ -238,7 +245,9 @@ export class GameOpt extends Scene {
 
   gameStop() {
     if (!this.play) return
+
     this.play = false
+
     if (this.gameEnd) this.gameEnd()
     if (this.checkTimer) clearTimeout(this.checkTimer)
     if (this.levelTimeout) clearInterval(this.levelTimeout)
@@ -281,6 +290,11 @@ export class GameOpt extends Scene {
     this.play = true
     this.level = 0
     this.configLevel(this.levels[this.level])
+    
+    Object.values(GAME_LEVELS).forEach((level) => {
+      this.load.image(`tiles-${level.ind}`, `../img/tiles/p-${level.ind}.png`)
+    })
+
     this.updateLevel()
   }
 
@@ -288,6 +302,7 @@ export class GameOpt extends Scene {
     this.ball = this.matter.add.sprite(((this.game.config.width as number) + BALL_WIDTH) / 2, this.topLimit, 'ball')
     this.ball.gameObject = this.ball.setCircle(BALL_WIDTH, this.obj)
     this.ball.setScale(BALL_WIDTH / this.ball.width)
+
     this.matter.world.setBounds(0, 0, this.game.config.width as number, this.game.config.height as number)
     this.matter.world.on('collisionstart', ((event: any, bodyA: any, bodyB: any) => {
       this.handleWallCollision(event, bodyA, bodyB, this)
@@ -313,19 +328,19 @@ export class GameOpt extends Scene {
     this.levelTimeout = setInterval(() => {
       this.level += 1
 
-      if (this.levels[this.level]) {
-        this.configLevel(this.levels[this.level])
-      } else if (this.levelTimeout) {
-        clearInterval(this.levelTimeout)
-      }
-    }, 5000)
+      if (this.levels[this.level]) this.configLevel(this.levels[this.level])
+      else if (this.levelTimeout) clearInterval(this.levelTimeout)
+    }, this.checkTimerInt)
   }
 
   checkLines() {
     this.checkTimer = setInterval(() => {
       this.lines = this.lines.filter((line) => {
         if (line[0]?.body.position.y + LINE_HEIGHT < 0) {
-          line.forEach((linePart) => linePart.destroy())
+          line.forEach((linePart) => {
+            linePart.body.destroy()
+            linePart.destroy()
+          })
           return false
         }
         return true
@@ -396,7 +411,7 @@ export class GameOpt extends Scene {
         // @ts-ignore
         body.body['settedtype'] = 'line'
   
-        lines.push(body)
+        lines.push(tileSprite)
       }
 
       return shift + p
@@ -406,13 +421,13 @@ export class GameOpt extends Scene {
     let width = platformWidth - lastPoint - BALL_WIDTH / 2
     let remainder = width % LINE_HEIGHT
     width -= remainder
-    
+
     if (width) {
       const lastPart = this.add.tileSprite(lastPoint + remainder + (BALL_WIDTH + width) / 2, platformHeight + LINE_HEIGHT / 2, width, LINE_HEIGHT, this.wallTile)
   
       const lastPartBody = this.matter.add.gameObject(lastPart, this.wallsObj)
   
-      lines.push(lastPartBody)
+      lines.push(lastPart)
 
       // @ts-ignore
       lastPartBody.body['settedtype'] = 'line'
@@ -424,11 +439,11 @@ export class GameOpt extends Scene {
   configLevel(levelOpt: GameLevelType) {
     if (levelOpt.speed) {
       this.speed = levelOpt.speed
-      this.bgSpeed = levelOpt.speed / this.bgScale
+      this.bgSpeed = Math.floor(Number((levelOpt.speed / this.bgScale).toFixed(2)))
     }
-    if (typeof levelOpt.ind === 'number') {
-      this.wallTile = `tiles-${levelOpt.ind}`
-    }
+    if (levelOpt?.ind) this.scene.scene.textures.remove(this.wallTile)
+    this.wallTile = `tiles-${levelOpt.ind}`
+    if (levelOpt.gravityScale) this.gravityScale = levelOpt.gravityScale
   }
 
   showScore() {

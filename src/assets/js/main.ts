@@ -1,4 +1,4 @@
-import { WEBGL, Scale } from 'phaser'
+import { WEBGL, CANVAS, Scale } from 'phaser'
 
 import { GameOpt } from "./Game"
 
@@ -19,6 +19,7 @@ export function createGameConfig({ width, height, volume, controlType, canvas, g
     type: WEBGL,
     canvas: canvas,
     transparent: true,
+    powerPreference: 'high-performance',
     scale: {
       mode: Scale.ScaleModes.FIT,
       autoCenter: Scale.CENTER_BOTH,
@@ -29,7 +30,7 @@ export function createGameConfig({ width, height, volume, controlType, canvas, g
     physics: {
       default: 'matter',
       physics: {
-        gravity: { y: 9.8, x: 0 },
+        gravity: { y: 10, x: 0 },
         debug: false
       }
     },

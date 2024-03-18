@@ -40,7 +40,7 @@ onMounted(() => {
       gameEnd: gameEnd,
       gameUpdate: gameUpdate,
     })
-
+   
     game.value = new Game(gameConfig)
   }
 })
