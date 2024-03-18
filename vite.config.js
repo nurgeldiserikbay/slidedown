@@ -115,6 +115,7 @@ const VitePWAConf = {
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: './',
   plugins: [vue(), svgLoader(), VitePWA(VitePWAConf)],
   resolve: {
     alias: [
