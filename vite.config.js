@@ -16,7 +16,7 @@ const VitePWAConf = {
     id: 'com.thelightcome.stonefall',
     name: 'Stone Fall',
     short_name: 'Stone Fall',
-    description: 'Stone Fall - ',
+    description: 'Stone Fall - In StoneDrop Dash, your task is simple: guide a falling stone left and right through a maze of obstacles, avoiding contact with the upper border at all costs. With increasing speed and relentless challenges, test your reflexes and precision in this addictive arcade adventure. How long can you keep the stone from meeting its end?',
     scope: START_PATH + '/',
     start_url: START_PATH + '/',
     display: 'standalone',
@@ -28,7 +28,8 @@ const VitePWAConf = {
       {
         protocol: 'web+burger',
         name: 'My HTTP Handler',
-        uri_template: 'https://mywebapp.com/?url=%s'
+        uri_template: 'https://mywebapp.com/?url=%s',
+        url: '/'
       },
     ],
     icons: [
