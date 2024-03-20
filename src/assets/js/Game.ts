@@ -291,9 +291,9 @@ export class GameOpt extends Scene {
     this.level = 0
     this.configLevel(this.levels[this.level])
     
-    Object.values(GAME_LEVELS).forEach((level) => {
-      this.load.image(`tiles-${level.ind}`, `./img/tiles/p-${level.ind}.png`)
-    })
+    // Object.values(GAME_LEVELS).forEach((level) => {
+    //   this.load.image(`tiles-${level.ind}`, `./img/tiles/p-${level.ind}.png`)
+    // })
 
     this.updateLevel()
   }
@@ -441,7 +441,7 @@ export class GameOpt extends Scene {
       this.speed = levelOpt.speed
       this.bgSpeed = Math.floor(Number((levelOpt.speed / this.bgScale).toFixed(2)))
     }
-    if (levelOpt?.ind) this.scene.scene.textures.remove(this.wallTile)
+    // if (levelOpt?.ind) this.scene.scene.textures.remove(this.wallTile)
     this.wallTile = `tiles-${levelOpt.ind}`
     if (levelOpt.gravityScale) this.gravityScale = levelOpt.gravityScale
   }
