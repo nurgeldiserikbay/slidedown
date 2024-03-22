@@ -9,9 +9,6 @@ const START_PATH = '/slidedown'
 const VitePWAConf = {
   injectRegister: 'auto',
   registerType: 'autoUpdate',
-  build: {
-    outDir: './docs'
-  },
   workbox: {
     globPatterns: ['**/*.{js,css,html,ico,png,svg,json,vue,txt,woff2}']
   },
@@ -120,6 +117,9 @@ const VitePWAConf = {
 // https://vitejs.dev/config/
 export default defineConfig({
   base: './',
+  build: {
+    outDir: './docs'
+  },
   plugins: [vue(), svgLoader(), VitePWA(VitePWAConf)],
   resolve: {
     alias: [
