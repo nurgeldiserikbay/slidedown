@@ -1,0 +1,9 @@
+bubblewrap init --manifest https://nurgeldiserikbay.github.io/slidedown/manifest.webmanifest
+
+
+org.gradle.jvmargs=-Xmx1024m
+
+
+keytool -list -v -keystore D:\WORK\Passwords\thelightcome\thelightcome.keystore -alias thelightcome -keypass thelightcome  -storepass thelightcome | grep SHA256
+
+A5:A3:54:11:2E:ED:F8:EA:C6:78:5A:42:69:9F:4C:F1:B4:5D:C1:DB:6A:CA:70:45:79:5E:53:E3:7E:AA:CB:C2

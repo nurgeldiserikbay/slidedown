@@ -16,7 +16,7 @@ const VitePWAConf = {
     id: 'com.thelightcome.stonefall',
     name: 'Stone Fall',
     short_name: 'Stone Fall',
-    description: 'Stone Fall - In StoneDrop Dash, your task is simple: guide a falling stone left and right through a maze of obstacles, avoiding contact with the upper border at all costs. With increasing speed and relentless challenges, test your reflexes and precision in this addictive arcade adventure. How long can you keep the stone from meeting its end?',
+    description: 'Stone Fall - In Stone Fall, your task is simple: guide the falling stone left and right through a maze of obstacles, avoiding contact with the upper boundary at all costs. This addictive game will test your reflexes and accuracy against increasing speed and never-ending challenges. How long can you hold the stone off the end?',
     scope: START_PATH + '/',
     start_url: START_PATH + '/',
     display: 'fullscreen',
