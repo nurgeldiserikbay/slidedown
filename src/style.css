@@ -44,6 +44,7 @@ body {
   box-sizing: border-box;
   background: #1b2638;
   flex-grow: 1;
+  overflow: hidden;
 }
 
 .container {
