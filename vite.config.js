@@ -30,8 +30,8 @@ const VitePWAConf = {
       {
         protocol: 'web+burger',
         name: 'My HTTP Handler',
-        uri_template: 'https://mywebapp.com/?url=%s',
-        url: '/'
+        uri_template: '/?url=%s',
+        url: '/stonefall'
       },
     ],
     icons: [
