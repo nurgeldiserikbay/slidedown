@@ -9,6 +9,9 @@ const START_PATH = '/slidedown'
 const VitePWAConf = {
   injectRegister: 'auto',
   registerType: 'autoUpdate',
+  build: {
+    outDir: './docs'
+  },
   workbox: {
     globPatterns: ['**/*.{js,css,html,ico,png,svg,json,vue,txt,woff2}']
   },
