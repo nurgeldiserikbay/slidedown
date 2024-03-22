@@ -4,7 +4,9 @@ import vue from '@vitejs/plugin-vue'
 import svgLoader from 'vite-svg-loader'
 import { VitePWA } from 'vite-plugin-pwa'
 
-const START_PATH = ''
+const START_PATH = '.'
+const SCOPE = 'https://nurgeldiserikbay.github.io/stonefall/'
+const START_URL = './index.html'
 
 const VitePWAConf = {
   injectRegister: 'auto',
@@ -17,8 +19,8 @@ const VitePWAConf = {
     name: 'Stone Fall',
     short_name: 'Stone Fall',
     description: 'Stone Fall - In Stone Fall, your task is simple: guide the falling stone left and right through a maze of obstacles, avoiding contact with the upper boundary at all costs. This addictive game will test your reflexes and accuracy against increasing speed and never-ending challenges. How long can you hold the stone off the end?',
-    scope: START_PATH + '/',
-    start_url: START_PATH + '/',
+    scope: SCOPE,
+    start_url: START_URL,
     display: 'fullscreen',
     orientation: 'portrait',
     background_color: '#fff',
