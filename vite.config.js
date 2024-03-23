@@ -5,8 +5,8 @@ import svgLoader from 'vite-svg-loader'
 import { VitePWA } from 'vite-plugin-pwa'
 
 const START_PATH = '.'
-const SCOPE = 'https://nurgeldiserikbay.github.io/stonefall/'
-const START_URL = 'https://nurgeldiserikbay.github.io/stonefall/index.html?fullscreen=true'
+const SCOPE = 'https://nurgeldiserikbay.github.io/'
+const START_URL = './index.html?fullscreen=true'
 
 const VitePWAConf = {
   injectRegister: 'auto',
