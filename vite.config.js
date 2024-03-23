@@ -6,7 +6,7 @@ import { VitePWA } from 'vite-plugin-pwa'
 
 const START_PATH = '.'
 const SCOPE = 'https://nurgeldiserikbay.github.io/stonefall/'
-const START_URL = './index.html'
+const START_URL = 'https://nurgeldiserikbay.github.io/stonefall/'
 
 const VitePWAConf = {
   injectRegister: 'auto',
@@ -26,14 +26,7 @@ const VitePWAConf = {
     background_color: '#fff',
     lang: 'en',
     theme_color: '#fff',
-    protocol_handlers: [
-      {
-        protocol: 'web+burger',
-        name: 'My HTTP Handler',
-        uri_template: '/?url=%s',
-        url: '/stonefall'
-      },
-    ],
+    protocol_handlers: [],
     icons: [
       {
         src: START_PATH + '/icons/favicon-16x16.png',
