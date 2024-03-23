@@ -1,4 +1,4 @@
-bubblewrap init --manifest https://nurgeldiserikbay.github.io/slidedown/manifest.webmanifest
+bubblewrap init --manifest https://nurgeldiserikbay.github.io/stonefall/manifest.webmanifest
 
 org.gradle.jvmargs=-Xmx1024m
 
