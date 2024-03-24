@@ -48,7 +48,7 @@ onMounted(() => {
     <img v-show="!settingsStore.settingsActive" src="/img/logotype.png" alt="logotype" class="logotype" />
     <div v-show="!settingsStore.settingsActive" class="controls">
       <button v-if="isHasGravityControl" class="btn control control__1" :class="{ isAnimated: settingsStore.isAnimated }" @click="selectControl(CONTROLS.GRAVITY)" @animationend="settingsStore.animationEnd"><IconRotate /></button>
-      <button v-else class="btn control control__1" :class="{ isAnimated: settingsStore.isAnimated }" @click="selectControl(CONTROLS.KEYBOARD)" @animationend="settingsStore.animationEnd"><IconKeyboard /></button>
+      <button v-else class="btn control control__1 control__1--wide" :class="{ isAnimated: settingsStore.isAnimated }" @click="selectControl(CONTROLS.KEYBOARD)" @animationend="settingsStore.animationEnd"><IconKeyboard /></button>
       <button class="btn control control__2" :class="{ isAnimated: settingsStore.isAnimated }" @click="selectControl(CONTROLS.SWIPE)"><IconSwipe /></button>
     </div>    
   </div>
@@ -79,6 +79,10 @@ onMounted(() => {
       max-width: 120px;
       width: 40%;
       animation-delay: 100ms;
+
+      &--wide {
+        max-width: 180px;
+      }
       
       svg {
         animation: dribble 2s linear infinite;
