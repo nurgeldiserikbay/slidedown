@@ -6,11 +6,12 @@ export const PAGES: { [key in PagesType]: PagesType } = {
   PLAYGROUND: 'PLAYGROUND',
 }
 
-export type ControlsType = 'GRAVITY' | 'SWIPE'
+export type ControlsType = 'GRAVITY' | 'SWIPE' | 'KEYBOARD'
 
 export const CONTROLS: { [key in ControlsType]: ControlsType } = {
   GRAVITY: 'GRAVITY',
   SWIPE: 'SWIPE',
+  KEYBOARD: 'KEYBOARD',
 }
 
 export const DEFAULT_USERNAME = 'USERNAME'

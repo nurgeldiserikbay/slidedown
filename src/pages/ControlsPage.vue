@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 
 import { usePageStore } from '@/store/pageStore'
 import { useSettingsStore } from '@/store/settingsStore'
@@ -9,6 +9,7 @@ import { useAudio } from '@/composables/useAudio'
 
 import IconRotate from '@/assets/img/icons/rotate.svg?component'
 import IconSwipe from '@/assets/img/icons/swipe.svg?component'
+import IconKeyboard from '@/assets/img/icons/keyboard.svg?component'
 
 import AnimBlock from '@/components/main/AnimBlock.vue'
 import SoundModal from '@/components/main/SoundModal.vue'
@@ -17,6 +18,8 @@ const pageStore = usePageStore()
 const settingsStore = useSettingsStore()
 const { playAudio } = useAudio()
 
+const isHasGravityControl = ref(true)
+
 function selectControl(controlType: ControlsType) {
   playAudio('click')
   settingsStore.setControlType(controlType)
@@ -24,6 +27,14 @@ function selectControl(controlType: ControlsType) {
 }
 
 onMounted(() => {
+  window.addEventListener('devicemotion', function(event: any){
+    if (event.rotationRate.alpha === null || event.rotationRate.beta === null || event.rotationRate.gamma === null) {
+      isHasGravityControl.value = false
+    } else {
+      isHasGravityControl.value = true
+    }
+  }, { once: true })
+
   if (!settingsStore.isAnimated) {
     playAudio('falling')
   }
@@ -36,7 +47,8 @@ onMounted(() => {
     <AnimBlock :is-animated="settingsStore.isAnimated" />
     <img v-show="!settingsStore.settingsActive" src="/img/logotype.png" alt="logotype" class="logotype" />
     <div v-show="!settingsStore.settingsActive" class="controls">
-      <button class="btn control control__1" :class="{ isAnimated: settingsStore.isAnimated }" @click="selectControl(CONTROLS.GRAVITY)" @animationend="settingsStore.animationEnd"><IconRotate /></button>
+      <button v-if="isHasGravityControl" class="btn control control__1" :class="{ isAnimated: settingsStore.isAnimated }" @click="selectControl(CONTROLS.GRAVITY)" @animationend="settingsStore.animationEnd"><IconRotate /></button>
+      <button v-else class="btn control control__1" :class="{ isAnimated: settingsStore.isAnimated }" @click="selectControl(CONTROLS.KEYBOARD)" @animationend="settingsStore.animationEnd"><IconKeyboard /></button>
       <button class="btn control control__2" :class="{ isAnimated: settingsStore.isAnimated }" @click="selectControl(CONTROLS.SWIPE)"><IconSwipe /></button>
     </div>    
   </div>

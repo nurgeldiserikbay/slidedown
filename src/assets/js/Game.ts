@@ -134,7 +134,7 @@ export class GameOpt extends Scene {
   update() {
     if (!this.play) return
 
-    // this.updateKeybord()
+    this.updateKeybord()
 
     this.background.tilePositionY = this.background.tilePositionY + this.bgSpeed
 
@@ -167,15 +167,13 @@ export class GameOpt extends Scene {
   createControls() {
     if (this.controlType === CONTROLS.GRAVITY) this.initGravityControls()
     else if (this.controlType === CONTROLS.SWIPE) this.initSwipeControls()
-    // else if (this.controlType === CONTROLS.KEYBOARD) this.initKeyboardControls()
-    // else if (this.controlType === CONTROLS.BUTTON) this.initButtonControls()
+    else if (this.controlType === CONTROLS.KEYBOARD) this.initKeyboardControls()
   }
 
   destroyControls() {
     if (this.controlType === CONTROLS.GRAVITY) this.destroyGravityControls()
     else if (this.controlType === CONTROLS.SWIPE) this.destroySwipeControls()
-    // else if (this.controlType === CONTROLS.KEYBOARD) this.initKeyboardControls()
-    // else if (this.controlType === CONTROLS.BUTTON) this.initButtonControls()
+    else if (this.controlType === CONTROLS.KEYBOARD) this.initKeyboardControls()
   }
 
   initGravityControls() {
@@ -291,10 +289,6 @@ export class GameOpt extends Scene {
     this.level = 0
     this.configLevel(this.levels[this.level])
     
-    // Object.values(GAME_LEVELS).forEach((level) => {
-    //   this.load.image(`tiles-${level.ind}`, `./img/tiles/p-${level.ind}.png`)
-    // })
-
     this.updateLevel()
   }
 
@@ -450,61 +444,27 @@ export class GameOpt extends Scene {
     if (this.gameUpdate) this.gameUpdate({ score: this.score, speed: this.speed })
   }
 
-  // initKeyboardControls() {
-  //   this.cursors = this.input?.keyboard?.createCursorKeys()
-  // }
+  initKeyboardControls() {
+    this.cursors = this.input?.keyboard?.createCursorKeys()
+  }
 
-  // updateKeybord() {
-  //   if ((this.controlType !== CONTROLS.KEYBOARD && this.controlType !== CONTROLS.BUTTON) || !this.play) return
+  updateKeybord() {
+    if ((this.controlType !== CONTROLS.KEYBOARD) || !this.play) return
 
-  //   if (this.cursors?.left.isDown || this.btnDir === -1) {
-  //     this.matter.applyForceFromAngle(this.ball.body, -Math.PI / 2, this.forceScale)
-  //   } else if (this.cursors?.right.isDown || this.btnDir === 1) {
-  //     this.matter.applyForceFromAngle(this.ball.body, Math.PI / 2, this.forceScale)
-  //   }
-  // }
+    if (this.cursors?.left.isDown || this.btnDir === -1) {
+      this.matter.applyForceFromAngle(this.ball.body, -Math.PI / 2, this.forceScale)
+      // @ts-ignore
+      this.ball.setAngularVelocity(-1 * this.forceScale / 2)
+    } else if (this.cursors?.right.isDown || this.btnDir === 1) {
+      this.matter.applyForceFromAngle(this.ball.body, Math.PI / 2, this.forceScale)
+      // @ts-ignore
+      this.ball.setAngularVelocity(this.forceScale / 2)
+    }
+  }
 
-  // destroyKeyboardControls() {
-  //   this.input.keyboard.removeCursorKeys()
+  destroyKeyboardControls() {
+    this.cursors.removeAll()
 
-  //   this.cursors = null
-  // }
-
-  // initButtonControls() {
-  //   this.btnControls = document.querySelector('.controls')
-
-  //   if (!this.btnControls) return
-
-  //   this.btnControls.classList.add('controls--active')
-
-  //   this.btnControls.addEventListener('mousedown', this.mousedown.bind(this))
-  //   this.btnControls.addEventListener('touchstart', this.mousedown.bind(this))
-
-  //   document.addEventListener('mouseup', this.mouseup.bind(this))
-  //   document.addEventListener('touchend', this.mouseup.bind(this))
-  //   document.addEventListener('touchcancel', this.mouseup.bind(this))
-  // }
-
-  // mousedown(e) {
-  //   const btn = e.target.closest('[data-dir]')
-
-  //   if (!btn) return
-
-  //   this.btnDir = btn.dataset.dir === 'left' ? -1 : 1
-  // }
-
-  // mouseup() {
-  //   this.btnDir = 0
-  // }
-
-  // destroyButtonControls() {
-  //   this.btnControls.removeEventListener('mousedown', this.mousedown.bind(this))
-  //   this.btnControls.removeEventListener('touchstart', this.mousedown.bind(this))
-  //   document.removeEventListener('mouseup', this.mouseup.bind(this))
-  //   document.removeEventListener('touchend', this.mouseup.bind(this))
-  //   document.removeEventListener('touchcancel', this.mouseup.bind(this))
-  //   this.btnControls.classList.remove('controls--active')
-  //   this.btnControls = null
-  //   this.btnDir = 0
-  // }
+    this.cursors = null
+  }
 }
