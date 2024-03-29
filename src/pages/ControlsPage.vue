@@ -50,11 +50,16 @@ onMounted(() => {
       <button v-if="isHasGravityControl" class="btn control control__1" :class="{ isAnimated: settingsStore.isAnimated }" @click="selectControl(CONTROLS.GRAVITY)" @animationend="settingsStore.animationEnd"><IconRotate /></button>
       <button v-else class="btn control control__1 control__1--wide" :class="{ isAnimated: settingsStore.isAnimated }" @click="selectControl(CONTROLS.KEYBOARD)" @animationend="settingsStore.animationEnd"><IconKeyboard /></button>
       <button class="btn control control__2" :class="{ isAnimated: settingsStore.isAnimated }" @click="selectControl(CONTROLS.SWIPE)"><IconSwipe /></button>
-    </div>    
+    </div>
+    <a class="privacy_policy" href="https://docs.google.com/document/d/1M4oD7y3zybh1hEEPod4t4_uw6McZz5KPHoOqESkp7uw/edit" target="_blank">Privacy Policy</a>
   </div>
 </template>
 
 <style lang="scss" scoped>
+.page {
+  position: relative;
+}
+
 .logotype {
   text-align: center;
   width: 80%;
@@ -81,7 +86,8 @@ onMounted(() => {
       animation-delay: 100ms;
 
       &--wide {
-        max-width: 180px;
+        width: 47%;
+        max-width: 200px;
       }
       
       svg {
@@ -130,5 +136,18 @@ onMounted(() => {
   100% {
     transform: translateY(0%);
   }
+}
+
+.privacy_policy {
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  letter-spacing: 3px;
+  text-decoration: none;
+  font-weight: bold;
+  color: #f0f0f0;
 }
 </style>
