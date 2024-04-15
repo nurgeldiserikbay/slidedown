@@ -23,9 +23,11 @@ onMounted(() => {
 })
 
 function startGame() {
+  alert('startGame')
   playAudio('click')
   settingsStore.saveName(name.value)
 
+  alert('startGamed')
   pageStore.routeTo(PAGES.PLAYGROUND)
 }
 

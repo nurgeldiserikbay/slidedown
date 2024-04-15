@@ -1,7 +1,7 @@
 {
   "appId": "com.thelightcome.stonefall",
   "appName": "Stone Fall",
-  "webDir": "dist",
+  "webDir": "docs",
   "server": {
     "androidScheme": "https"
   }
