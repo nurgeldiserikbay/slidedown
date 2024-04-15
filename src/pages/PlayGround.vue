@@ -28,7 +28,6 @@ watch(audioActive, () => {
 })
 
 onMounted(() => {
-  alert('onMounted')
   if (canvas.value) {
     const style = getComputedStyle(canvas.value)
 

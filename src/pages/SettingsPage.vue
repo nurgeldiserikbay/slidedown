@@ -23,15 +23,13 @@ onMounted(() => {
 })
 
 function startGame() {
-  alert('startGame')
   playAudio('click')
   settingsStore.saveName(name.value)
 
-  alert('startGamed')
   pageStore.routeTo(PAGES.PLAYGROUND)
 }
 
-function input(e) {
+function input(e: any) {
   if (e.target.value.length > 8) {
     e.target.value = name.value
   }
@@ -48,7 +46,6 @@ function input(e) {
       <div class="form__name">
         <input :value="name" type="text" @input="input">
       </div>
-      dsvsvsvdsvdvss
       <div class="form__control">
         <button class="btn form__start" @click="startGame">
           <IconPlay />
