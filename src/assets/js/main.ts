@@ -16,7 +16,7 @@ export interface IGameConfigOpt {
 
 export function createGameConfig({ width, height, volume, controlType, canvas, gameUpdate, gameEnd }: IGameConfigOpt) {
   return {
-    type: WEBGL,
+    type: CANVAS,
     canvas: canvas,
     transparent: true,
     powerPreference: 'high-performance',
