@@ -17,7 +17,7 @@ import ScoreTable from '@/components/main/ScoreTable.vue'
 const settingsStore = useSettingsStore()
 const { audioActive, playAudio } = useAudio()
 
-const game = ref<ReturnType<typeof Game>>()
+const game = ref()
 const canvas = ref<HTMLCanvasElement>()
 
 const score = ref(0)

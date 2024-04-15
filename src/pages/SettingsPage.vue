@@ -48,6 +48,7 @@ function input(e) {
       <div class="form__name">
         <input :value="name" type="text" @input="input">
       </div>
+      dsvsvsvdsvdvss
       <div class="form__control">
         <button class="btn form__start" @click="startGame">
           <IconPlay />
